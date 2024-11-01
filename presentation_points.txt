@@ -1,0 +1,63 @@
+TASKO - Task and Attendance Management System
+===========================================
+
+1. Project Overview
+------------------
+* Enterprise-grade task and attendance management solution
+* Built with Spring Boot and modern Java technologies
+* Secure, scalable, and user-friendly design
+* Real-time analytics and reporting capabilities
+
+2. Key Features
+--------------
+User Dashboard:
+* Personalized task management
+* Daily attendance logging system
+* Profile customization
+* Real-time notifications
+* Intuitive navigation
+
+Admin Dashboard:
+* Comprehensive enterprise management
+* User access control
+* Advanced payroll system
+* Task oversight and monitoring
+* Detailed analytics and reporting
+* System health monitoring
+
+3. Technical Highlights
+----------------------
+* Secure authentication using Spring Security
+* Role-based access control (RBAC)
+* Database management with Spring Data JPA
+* Server-side rendering with Thymeleaf
+* Responsive design with Tailwind CSS
+* H2 database for data persistence
+
+4. Implementation Benefits
+-------------------------
+* Improved task tracking efficiency
+* Streamlined attendance management
+* Automated payroll processing
+* Enhanced data visualization
+* Real-time performance monitoring
+* Reduced administrative overhead
+
+5. Future Enhancements
+----------------------
+* Mobile application development
+* Advanced reporting features
+* API documentation
+* Multi-language support
+* Enhanced analytics
+* Calendar integration
+
+6. Demo Points
+-------------
+* User registration and login
+* Task creation and assignment
+* Attendance logging process
+* Payroll generation
+* Analytics dashboard
+* Enterprise management
+* User management interface

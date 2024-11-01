@@ -1,0 +1,57 @@
+/* Primary Font - Epilogue */
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+/* Secondary Font - Space Grotesk */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* Colors */
+    --primary-blue: #75B6FF;
+    --grey-blue: #647693;
+    --white: #FFFFFF;
+    --light-grey: #F8FAFC;
+    
+    /* Font families */
+    --font-primary: 'Epilogue', sans-serif;
+    --font-secondary: 'Space Grotesk', sans-serif;
+}
+
+/* Base styles */
+body {
+    font-family: var(--font-primary);
+    background-color: var(--light-grey);
+    color: var(--grey-blue);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-secondary);
+    color: var(--grey-blue);
+}
+
+/* Utility classes */
+.font-epilogue {
+    font-family: var(--font-primary);
+}
+
+.font-space-grotesk {
+    font-family: var(--font-secondary);
+}
+
+/* Hover effects */
+.hover-effect {
+    transition: all 0.3s ease;
+}
+
+.hover-effect:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(100, 118, 147, 0.1);
+}
+
+/* Custom gradients */
+.gradient-primary {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--grey-blue) 100%);
+}
+
+.gradient-light {
+    background: linear-gradient(135deg, var(--white) 0%, var(--light-grey) 100%);
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Tasko - Reports & Analytics</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="/css/fonts.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gradient-to-br from-white to-blue-50">
+    <div class="flex">
+        <!-- Include Sidebar -->
+        <div th:replace="fragments/sidebar :: sidebar"></div>
+
+        <!-- Main Content -->
+        <div class="flex-1 lg:ml-64 p-8">
+            <div class="max-w-7xl mx-auto">
+                <h1 class="text-3xl font-bold text-gray-800 mb-6">Reports & Analytics</h1>
+
+                <!-- Summary Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all">
+                        <h3 class="text-lg font-semibold text-gray-700">Task Completion Rate</h3>
+                        <p class="text-3xl font-bold text-blue-600" th:text="${taskCompletionRate + '%'}">0%</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all">
+                        <h3 class="text-lg font-semibold text-gray-700">Attendance Rate</h3>
+                        <p class="text-3xl font-bold text-green-600" th:text="${attendanceRate + '%'}">0%</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all">
+                        <h3 class="text-lg font-semibold text-gray-700">Active Users</h3>
+                        <p class="text-3xl font-bold text-purple-600" th:text="${activeUsers}">0</p>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-semibold text-gray-700 mb-4">Task Status Distribution</h3>
+                        <canvas id="taskChart"></canvas>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-semibold text-gray-700 mb-4">Monthly Attendance Trends</h3>
+                        <canvas id="attendanceChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Detailed Reports -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4">Recent Activity Report</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full">
+                            <thead>
+                                <tr>
+                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Activity</th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr th:each="activity : ${recentActivities}">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" 
+                                        th:text="${#temporals.format(activity.date, 'yyyy-MM-dd')}"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" 
+                                        th:text="${activity.user.username}"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900" 
+                                        th:text="${activity.description}"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span th:class="${activity.status == 'Completed' ? 'text-green-600' : 'text-yellow-600'}"
+                                              th:text="${activity.status}"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        // Task Chart
+        const taskCtx = document.getElementById('taskChart').getContext('2d');
+        const taskData = /*[[${taskChartData}]]*/ {};
+        new Chart(taskCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Completed', 'In Progress', 'Pending'],
+                datasets: [{
+                    data: [taskData.completed, taskData.inProgress, taskData.pending],
+                    backgroundColor: ['#10B981', '#3B82F6', '#F59E0B']
+                }]
+            }
+        });
+
+        // Attendance Chart
+        const attendanceCtx = document.getElementById('attendanceChart').getContext('2d');
+        const attendanceData = /*[[${attendanceChartData}]]*/ {};
+        new Chart(attendanceCtx, {
+            type: 'line',
+            data: {
+                labels: attendanceData.labels,
+                datasets: [{
+                    label: 'Attendance Rate',
+                    data: attendanceData.values,
+                    borderColor: '#3B82F6',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

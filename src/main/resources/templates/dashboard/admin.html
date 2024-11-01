@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Tasko - Admin Dashboard</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="/css/fonts.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <style>
+        .custom-gradient {
+            background: linear-gradient(135deg, #FFFFFF 0%, #75B6FF 100%);
+        }
+    </style>
+</head>
+<body class="custom-gradient min-h-screen">
+    <div class="flex">
+        <!-- Include Sidebar -->
+        <div th:replace="fragments/sidebar :: sidebar"></div>
+
+        <!-- Main Content -->
+        <div class="flex-1 lg:ml-64 p-8">
+            <div class="max-w-7xl mx-auto">
+                <!-- Welcome Section -->
+                <div class="bg-white rounded-lg shadow-lg p-6 mb-8 hover-effect">
+                    <h1 class="text-3xl font-bold text-gray-800 mb-2" th:text="'Welcome, ' + ${user.username}"></h1>
+                    <p class="text-gray-600" th:text="${enterprise.name} + ' Administration'"></p>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white rounded-lg shadow-lg p-6 hover-effect">
+                        <h3 class="text-lg font-semibold text-gray-700">Total Users</h3>
+                        <p class="text-3xl font-bold text-blue-600" th:text="${userCount}">0</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-6 hover-effect">
+                        <h3 class="text-lg font-semibold text-gray-700">Active Tasks</h3>
+                        <p class="text-3xl font-bold text-green-600" th:text="${activeTaskCount}">0</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-6 hover-effect">
+                        <h3 class="text-lg font-semibold text-gray-700">Today's Attendance</h3>
+                        <p class="text-3xl font-bold text-purple-600" th:text="${todayAttendanceCount}">0</p>
+                    </div>
+                </div>
+
+                <!-- Mini Calendar -->
+                <div class="bg-white rounded-lg shadow-lg p-6 mb-8 hover-effect">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">Attendance Overview</h2>
+                    <div id="calendar" style="max-height: 400px;"></div>
+                </div>
+
+                <!-- Recent Activities -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Recent Tasks -->
+                    <div class="bg-white rounded-lg shadow-lg p-6 hover-effect">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4">Recent Tasks</h2>
+                        <div class="space-y-4">
+                            <div th:each="task : ${recentTasks}" 
+                                 class="p-4 border rounded-lg hover:bg-gray-50">
+                                <h3 class="font-semibold" th:text="${task.title}"></h3>
+                                <p class="text-sm text-gray-500" 
+                                   th:text="'Due: ' + ${#temporals.format(task.dueDate, 'yyyy-MM-dd')}"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Attendance -->
+                    <div class="bg-white rounded-lg shadow-lg p-6 hover-effect">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4">Recent Attendance</h2>
+                        <div class="space-y-4">
+                            <div th:each="attendance : ${recentAttendance}" 
+                                 class="p-4 border rounded-lg hover:bg-gray-50">
+                                <h3 class="font-semibold" th:text="${attendance.user.username}"></h3>
+                                <p class="text-sm text-gray-500">
+                                    <span th:text="${#temporals.format(attendance.date, 'yyyy-MM-dd')}"></span>
+                                    <span class="ml-2" th:text="${attendance.status}"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth'
+                },
+                height: 'auto',
+                events: '/attendance/events'
+            });
+            calendar.render();
+        });
+    </script>
+</body>
+</html>

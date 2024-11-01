@@ -1,0 +1,79 @@
+Tasko - Task and Attendance Management System
+Version: 1.0.0
+
+1. Project Overview:
+   - Enterprise-grade task and attendance management system
+   - Built with Spring Boot and modern web technologies
+   - Secure role-based access control
+   - Responsive design with Tailwind CSS
+   - Real-time analytics and reporting
+
+2. Core Features:
+   a) User Management:
+      - Role-based access (Admin/User)
+      - Secure authentication
+      - Profile management
+      - Enterprise association
+
+   b) Task Management:
+      - Create, assign, and track tasks
+      - Task status monitoring
+      - Due date tracking
+      - Task completion workflow
+      - Task filtering and sorting
+
+   c) Attendance System:
+      - Daily attendance logging
+      - Attendance tracking
+      - Monthly attendance reports
+      - Attendance analytics
+
+   d) Analytics & Reporting:
+      - Task completion metrics
+      - Attendance statistics
+      - User activity tracking
+      - Enterprise-wide analytics
+      - Visual data representation
+
+3. Technical Stack:
+   - Backend: Spring Boot 2.7.11
+   - Database: H2 (Development), PostgreSQL (Production)
+   - Frontend: Thymeleaf, Tailwind CSS
+   - Security: Spring Security
+   - Build Tool: Maven
+   - Java Version: 11
+
+4. Design Elements:
+   - Fonts:
+     * Primary: Epilogue (Sans-serif)
+     * Secondary: Space Grotesk
+   
+   - Color Palette:
+     * Primary Blue: #75B6FF
+     * Grey Blue: #647693
+     * White: #FFFFFF
+     * Light Grey: #F8FAFC
+
+5. Key Components:
+   - Cross-platform desktop launcher
+   - Responsive web interface
+   - Real-time data updates
+   - Interactive dashboards
+   - Role-specific views
+
+6. Security Features:
+   - Password encryption
+   - Session management
+   - Role-based access control
+   - Secure form submission
+   - CSRF protection
+
+7. Current Status:
+   ✓ All core features implemented
+   ✓ User/Admin dashboards functional
+   ✓ Reports and analytics working
+   ✓ Task management system complete
+   ✓ Attendance tracking operational
+   ✓ Enterprise management integrated
+   ✓ Profile system working
+   ✓ Security measures in place
